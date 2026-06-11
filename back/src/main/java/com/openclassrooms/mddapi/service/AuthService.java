@@ -15,13 +15,20 @@ public class AuthService {
        userRepository.save(user);
 
     }
-    public boolean login(String email, String password) {
+
+    public User login(String email, String password) {
+
         User user = userRepository.findByEmail(email)
                 .orElse(null);
-        if (user == null) {
-            return false;
-        }
-        return user.getPassword().equals(password);
-    }
 
+        if (user == null) {
+            return null;
+        }
+
+        if (!user.getPassword().equals(password)) {
+            return null;
+        }
+
+        return user;
+    }
 }

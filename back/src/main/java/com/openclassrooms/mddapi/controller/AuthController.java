@@ -25,15 +25,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
 
-        boolean authenticated =
+        User authenticatedUser =
                 authService.login(user.getEmail(), user.getPassword());
 
-        if (authenticated) {
-            return ResponseEntity.ok("Connexion réussie");
+        if (authenticatedUser == null) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("Email ou mot de passe incorrect");
         }
 
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body("Email ou mot de passe incorrect");
+        return ResponseEntity.ok(
+                "Connexion réussie : " + authenticatedUser.getUsername()
+        );
     }
 }
