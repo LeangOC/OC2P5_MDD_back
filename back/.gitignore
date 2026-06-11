@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Mes répertoires et fichier
+MyEtape/
+MyScript/
+MyDoc/
+MyReadme.md
