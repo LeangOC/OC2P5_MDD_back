@@ -21,4 +21,19 @@ public class AuthController {
             .status(HttpStatus.CREATED)
             .body("Utilisateur créé avec succès");
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+
+        boolean authenticated =
+                authService.login(user.getEmail(), user.getPassword());
+
+        if (authenticated) {
+            return ResponseEntity.ok("Connexion réussie");
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body("Email ou mot de passe incorrect");
+    }
 }
