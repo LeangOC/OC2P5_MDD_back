@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.openclassrooms.mddapi.security.JwtService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class AuthController {
     private final JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(
+    public ResponseEntity<Map<String, String>> register(
             @RequestBody User user) {
 
         User createdUser = authService.register(user);
@@ -28,7 +30,7 @@ public class AuthController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(token);
+                .body(Map.of("token", token));
     }
 
     @PostMapping("/login")
