@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.openclassrooms.mddapi.security.JwtService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
@@ -33,9 +35,9 @@ public class AuthController {
                     .status(HttpStatus.UNAUTHORIZED)
                     .body("Email ou mot de passe incorrect");
         }
+        String token = jwtService.generateToken( authenticatedUser.getUsername());
+       // return ResponseEntity.ok(Connexion réussie : " + authenticatedUser.getUsername() );
+        return ResponseEntity.ok(token);
 
-        return ResponseEntity.ok(
-                "Connexion réussie : " + authenticatedUser.getUsername()
-        );
     }
 }
