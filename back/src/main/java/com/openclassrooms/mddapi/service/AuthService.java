@@ -13,11 +13,12 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void register(User user) {
-        // Encodage du mot de passe avant sauvegarde
-       user.setPassword( passwordEncoder.encode(user.getPassword()) );
-       userRepository.save(user);
+    public User register(User user) {
 
+        user.setPassword(
+                passwordEncoder.encode(user.getPassword())
+        );
+        return userRepository.save(user);
     }
 
     public User login(String email, String password) {

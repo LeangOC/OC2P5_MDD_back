@@ -17,11 +17,18 @@ public class AuthController {
     private final JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-    authService.register(user);
-    return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body("Utilisateur créé avec succès");
+    public ResponseEntity<String> register(
+            @RequestBody User user) {
+
+        User createdUser = authService.register(user);
+
+        String token =
+                jwtService.generateToken(
+                        createdUser.getUsername());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(token);
     }
 
     @PostMapping("/login")
