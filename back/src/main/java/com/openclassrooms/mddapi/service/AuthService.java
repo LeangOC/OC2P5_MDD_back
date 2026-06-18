@@ -4,14 +4,18 @@ import com.openclassrooms.mddapi.entity.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void register(User user) {
+        // Encodage du mot de passe avant sauvegarde
+       user.setPassword( passwordEncoder.encode(user.getPassword()) );
        userRepository.save(user);
 
     }
@@ -25,7 +29,7 @@ public class AuthService {
             return null;
         }
 
-        if (!user.getPassword().equals(password)) {
+        if (!passwordEncoder.matches( password, user.getPassword())) {
             return null;
         }
 
