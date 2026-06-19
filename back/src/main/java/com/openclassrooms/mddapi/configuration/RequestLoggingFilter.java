@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi.config;
+package com.openclassrooms.mddapi.configuration;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

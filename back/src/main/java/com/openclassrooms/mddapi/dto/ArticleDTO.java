@@ -1,31 +1,36 @@
 package com.openclassrooms.mddapi.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-
+public class ArticleDTO {
     private Long id;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
+    private Long userId;
+
+    private String userName;
+
+    private Long subjectId;
+
+    private String subjectName;
 
     @NotBlank
-    @Size(max = 50)
-    private String username;
+    @Size(max = 100)
+    private String title;
 
     @NotBlank
-    @Size(min = 6, max = 40)
-    private String password;
+    @Size(max = 5000)
+    private String content;
+
+    private Date publishedAt;
 
 }
