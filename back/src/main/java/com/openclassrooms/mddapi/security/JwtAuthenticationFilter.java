@@ -27,20 +27,28 @@ public class JwtAuthenticationFilter
             HttpServletResponse response,
             FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("===== JWT FILTER =====");
 
         String header =
                 request.getHeader("Authorization");
-
+        System.out.println("Header = " + header);
         if (header != null &&
                 header.startsWith("Bearer ")) {
 
-            String token =
-                    header.substring(7);
+            String token = header.substring(7);
 
-            if (jwtService.isValid(token)) {
+            System.out.println("Token reçu");
+
+            boolean valid = jwtService.isValid(token);
+
+            System.out.println("Token valide = " + valid);
+
+            if (valid) {
 
                 String username =
                         jwtService.extractUsername(token);
+
+                System.out.println("Username = " + username);
 
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
@@ -52,6 +60,13 @@ public class JwtAuthenticationFilter
                 SecurityContextHolder
                         .getContext()
                         .setAuthentication(auth);
+
+                System.out.println(
+                        "Authentication = "
+                                + SecurityContextHolder
+                                .getContext()
+                                .getAuthentication()
+                );
             }
         }
         filterChain.doFilter(request, response);
