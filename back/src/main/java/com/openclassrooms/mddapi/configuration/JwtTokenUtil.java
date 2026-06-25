@@ -14,7 +14,7 @@ import java.util.Date;
 
 
 @Component
-public class jwtTokenUtil implements Serializable {
+public class JwtTokenUtil implements Serializable {
 
     @Value("${jwt.secret}")
     private String jwtSecret;

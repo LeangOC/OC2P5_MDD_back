@@ -7,6 +7,21 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * Représente un commentaire publié sur un article.
+ *
+ * <p>
+ * Chaque commentaire est associé à :
+ * </p>
+ * <ul>
+ *     <li>un auteur ;</li>
+ *     <li>un article ;</li>
+ *     <li>une date de création.</li>
+ * </ul>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Entity
 @Table(name = "comments")
 @Data

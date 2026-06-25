@@ -6,6 +6,8 @@ import com.openclassrooms.mddapi.exception.*;
 import com.openclassrooms.mddapi.model.Subject;
 import com.openclassrooms.mddapi.service.SubjectService;
 import com.openclassrooms.mddapi.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+/**
+ * Contrôleur REST responsable de la gestion des sujets.
+ *
+ * <p>
+ * Les sujets représentent les thématiques
+ * auxquelles les utilisateurs peuvent s'abonner.
+ * </p>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @RestController
 @RequestMapping("/api/subject")
+@Tag(name = "Sujets", description = "Gestion des sujets")
 public class SubjectController {
     private final SubjectService subjectService;
 
@@ -28,6 +41,7 @@ public class SubjectController {
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "Lister les sujets")
     @GetMapping
     public List<SubjectDTO> getAllSubjects() {
         // Récupérer l'utilisateur actuellement connecté
@@ -38,6 +52,7 @@ public class SubjectController {
         return subjectService.getAllSubjects(userDTO.getId());
     }
 
+    @Operation(summary = "Consulter un sujet")
     @GetMapping("/{id}")
     public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable Long id) {
         SubjectDTO subjectDTO = subjectService.getSubjectById(id);
@@ -47,6 +62,7 @@ public class SubjectController {
         return ResponseEntity.ok(subjectDTO);
     }
 
+    @Operation(summary = "Créer un sujet")
     @PostMapping
     public ResponseEntity<String> createSubject(@RequestBody SubjectDTO subjectDTO) {
         if (subjectDTO.getName() == null || subjectDTO.getName().trim().isEmpty()) {
@@ -67,6 +83,7 @@ public class SubjectController {
     }
 
 
+    @Operation(summary = "Modifier un sujet")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateSubject(@PathVariable Long id, @RequestBody SubjectDTO subjectDTO) {
         if (subjectDTO.getName() == null || subjectDTO.getName().trim().isEmpty()) {
@@ -85,8 +102,9 @@ public class SubjectController {
             throw new UpdateSubjectException("Failed to update Subject");    // Custom exception for failure to update
         }
     }
-    
 
+
+    @Operation(summary = "Supprimer un sujet")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSubjectById(@PathVariable Long id) {
         SubjectDTO subjectDTO = subjectService.getSubjectById(id);

@@ -9,9 +9,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+/**
+ * Implémentation du chargement des utilisateurs utilisé
+ * par Spring Security lors de l'authentification.
+ *
+ * <p>
+ * Cette classe fait le lien entre le système d'authentification
+ * Spring Security et la base de données applicative.
+ * </p>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsService
+        implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -20,8 +32,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     private PasswordEncoder bcryptEncoder;
 
     public CustomUserDetails loadUserByLogin(String login) throws UsernameNotFoundException {
-        // on veut que l'utilisateur puisse se connecter soit avec son email, soit avec son userName
-        // on essaye d'abord avec l'email
+
         Optional<User> userByEmail = userRepository.findByEmail(login);
         if (userByEmail.isPresent()) {
             return new CustomUserDetails(userByEmail.get());
@@ -37,13 +48,28 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
 
-    // méthode utilisé par l'authenticationManager
+
+    /**
+     * Recherche un utilisateur à partir de son identifiant.
+     *
+     * <p>
+     * Cette méthode est appelée automatiquement par Spring Security
+     * lors d'une tentative d'authentification.
+     * </p>
+     *
+     * @param userName identifiant utilisateur (email)
+     *
+     * @return informations nécessaires à Spring Security
+     *
+     * @throws UsernameNotFoundException
+     * si aucun utilisateur n'existe
+     */
     @Override
     public CustomUserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return loadUserByLogin(userName);
     }
 
-    // méthode utilisé pour encoder le password d'un nouvel utilisateur
+
     public User save(User user) {
         user.setPassword(bcryptEncoder.encode(user.getPassword()));
         return userRepository.save(user);

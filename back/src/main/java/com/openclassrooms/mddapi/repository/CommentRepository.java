@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository JPA dédié à la gestion
+ * des commentaires.
+ */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 

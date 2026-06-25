@@ -7,7 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * Objet de transfert représentant les informations
+ * d'un utilisateur.
+ *
+ * <p>
+ * Utilisé lors des opérations d'inscription,
+ * d'authentification et de mise à jour du profil.
+ * </p>
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

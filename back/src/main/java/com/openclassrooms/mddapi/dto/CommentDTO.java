@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * Objet de transfert représentant un commentaire.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

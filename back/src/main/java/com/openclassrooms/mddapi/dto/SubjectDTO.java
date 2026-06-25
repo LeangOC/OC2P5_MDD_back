@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Objet de transfert représentant un sujet.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

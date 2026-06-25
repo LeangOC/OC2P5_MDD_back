@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Repository JPA permettant l'accès
+ * aux données des articles.
+ */
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 

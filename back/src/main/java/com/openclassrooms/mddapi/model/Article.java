@@ -7,13 +7,29 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * Représente un article publié sur la plateforme.
+ *
+ * <p>
+ * Un article est associé :
+ * </p>
+ * <ul>
+ *     <li>à un auteur ;</li>
+ *     <li>à un sujet ;</li>
+ *     <li>à une date de création ;</li>
+ *     <li>à un ensemble de commentaires.</li>
+ * </ul>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Entity
 @Table(name = "articles", uniqueConstraints = {
     @UniqueConstraint(columnNames = "title")
 })
-@Data // Génère les getters et setters.
-@NoArgsConstructor  // Génère un constructeur sans paramètre.
-@AllArgsConstructor // Génère un constructeur avec un paramètre pour chaque propriété de la classe.
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article {
 
     @Id
@@ -22,25 +38,25 @@ public class Article {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User author; // The user who authored the article
+    private User author;
 
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
-    private Subject subject; // The subject the article belongs to
+    private Subject subject;
 
-    @Column(nullable = false)    // le nom du titre ne peut pas être vide
+    @Column(nullable = false)
     private String title;
 
-    @Lob    // permet de stocker de longs textes
-    @Column(nullable = false, length = 5000) // adjust length as needed
+    @Lob
+    @Column(nullable = false, length = 5000)
     private String content;
 
-    @Temporal(TemporalType.TIMESTAMP)   //spécifie que la propriété publishedAt doit être persistée en tant que TIMESTAMP SQL
+    @Temporal(TemporalType.TIMESTAMP)
     private Date publishedAt;
 
-    @PrePersist //méthode de rappel qui sera exécutée juste avant qu'une entité soit initialement persistée
+    @PrePersist
     protected void onCreate() {
-        publishedAt = new Date();   //appelée pour définir la valeur de publishedAt à la date et heure actuelles.
+        publishedAt = new Date();
     }
 
     public static Article createNewArticle(String title, String content, Subject subject, User author) {

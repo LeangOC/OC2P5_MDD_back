@@ -15,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +26,7 @@ class JwtRequestFilterTest {
     private JwtUserDetailsService jwtUserDetailsService;
 
     @Mock
-    private jwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
 
     @Mock
     private HttpServletRequest request;
@@ -42,7 +41,7 @@ class JwtRequestFilterTest {
     private DecodedJWT decodedJWT;
 
     @InjectMocks
-    private jwtRequestFilter jwtRequestFilter;
+    private JwtRequestFilter jwtRequestFilter;
 
     private CustomUserDetails userDetails;
 

@@ -8,7 +8,23 @@ import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+/**
+ * Service métier gérant les abonnements des utilisateurs
+ * aux différents sujets.
+ *
+ * <p>
+ * Il permet :
+ * </p>
+ *
+ * <ul>
+ *     <li>d'ajouter un abonnement ;</li>
+ *     <li>de supprimer un abonnement ;</li>
+ *     <li>de vérifier l'existence d'un abonnement.</li>
+ * </ul>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Service
 public class SubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
@@ -16,12 +32,21 @@ public class SubscriptionService {
     private final SubjectRepository subjectRepository;
 
     @Autowired
+
     public SubscriptionService(SubscriptionRepository subscriptionRepository, UserRepository userRepository, SubjectRepository subjectRepository) {
         this.subscriptionRepository = subscriptionRepository;
         this.userRepository = userRepository;
         this.subjectRepository = subjectRepository;
     }
 
+    /**
+     * Vérifie si un utilisateur suit un sujet.
+     *
+     * @param userId identifiant utilisateur
+     * @param subjectId identifiant sujet
+     *
+     * @return {@code true} si l'abonnement existe
+     */
     public boolean isSubscribed(Long subjectId, Long userId) {
         return subscriptionRepository.existsByUserIdAndSubjectId(userId, subjectId);
     }
@@ -33,6 +58,12 @@ public class SubscriptionService {
         subscriptionRepository.save(subscription);
     }
 
+    /**
+     * Supprime l'abonnement d'un utilisateur à un sujet.
+     *
+     * @param userId identifiant utilisateur
+     * @param subjectId identifiant du sujet
+     */
     public void unsubscribeSubject(Long subjectId, Long userId) {
         Subscription subscription = subscriptionRepository.findByUserIdAndSubjectId(userId, subjectId).orElseThrow(); // Vous pouvez gérer les exceptions ici
         subscriptionRepository.delete(subscription);

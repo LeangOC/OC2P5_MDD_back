@@ -6,6 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Représente un sujet disponible sur la plateforme.
+ *
+ * <p>
+ * Les utilisateurs peuvent s'abonner à un sujet
+ * afin de recevoir les articles qui lui sont associés.
+ * </p>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Entity
 @Table(name = "subjects", uniqueConstraints = {
     @UniqueConstraint(columnNames = "name")

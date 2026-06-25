@@ -16,6 +16,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service métier chargé de la gestion des commentaires.
+ *
+ * <p>
+ * Responsable des opérations de création, modification,
+ * consultation et suppression des commentaires associés
+ * aux articles.
+ * </p>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
@@ -38,7 +50,18 @@ public class CommentService {
         Optional<Comment> optionalComment = commentRepository.findById(id);
         return optionalComment.map(this::toDTO).orElse(null);
     }
-
+    /**
+     * Ajoute un commentaire à un article.
+     *
+     * <p>
+     * Le commentaire est associé automatiquement à l'utilisateur
+     * actuellement authentifié.
+     * </p>
+     *
+     * @param commentDTO données du commentaire
+     *
+     * @return commentaire créé
+     */
     public Comment createComment(CommentDTO commentDTO) {
         Comment comment = getComment(commentDTO);
 
@@ -46,6 +69,14 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    /**
+     * Modifie le contenu d'un commentaire existant.
+     *
+     * @param id identifiant du commentaire
+     * @param commentDTO nouvelles données
+     *
+     * @return commentaire mis à jour
+     */
     public Comment updateComment(Long id, CommentDTO commentDTO) {
         Comment comment = getComment(commentDTO);
 
@@ -54,6 +85,7 @@ public class CommentService {
         // Save the comment in the database
         return commentRepository.save(comment);
     }
+
 
     private Comment getComment(CommentDTO commentDTO) {
         // Find the author by userId
@@ -71,7 +103,11 @@ public class CommentService {
                 author
         );
     }
-
+    /**
+     * Supprime un commentaire.
+     *
+     * @param id identifiant du commentaire
+     */
     public void deleteCommentById(Long id) {
         commentRepository.deleteById(id);
     }

@@ -7,6 +7,8 @@ import com.openclassrooms.mddapi.exception.InvalidCommentDataException;
 import com.openclassrooms.mddapi.exception.UpdateCommentException;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.service.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Contrôleur REST dédié à la gestion des commentaires.
+ *
+ * <p>
+ * Permet la consultation, la création,
+ * la modification et la suppression des commentaires.
+ * </p>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @RestController
 @RequestMapping("/api/comment")
+@Tag(name = "Commentaires", description = "Gestion des commentaires")
 public class CommentController {
 
     private final CommentService commentService;
@@ -27,11 +41,24 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    /**
+     * Retourne l'ensemble des commentaires enregistrés.
+     *
+     * @return liste des commentaires
+     */
+    @Operation(summary = "Lister tous les commentaires")
     @GetMapping
     public List<CommentDTO> getAllComments() {
         return commentService.getAllComments();
     }
 
+    /**
+     * Recherche un commentaire à partir de son identifiant.
+     *
+     * @param id identifiant du commentaire
+     * @return commentaire correspondant
+     */
+    @Operation(summary = "Consulter un commentaire")
     @GetMapping("/{id}")
     public ResponseEntity<CommentDTO> getCommentById(@PathVariable Long id) {
         CommentDTO commentDTO = commentService.getCommentById(id);
@@ -41,6 +68,13 @@ public class CommentController {
         return ResponseEntity.ok(commentDTO);
     }
 
+    /**
+     * Crée un nouveau commentaire.
+     *
+     * @param commentDTO données du commentaire
+     * @return message de confirmation
+     */
+    @Operation(summary = "Créer un commentaire")
     @PostMapping
     public ResponseEntity<Map<String, String>> createComment(@RequestBody CommentDTO commentDTO) {
         if (commentDTO.getContent() == null || commentDTO.getContent().trim().isEmpty()) {
@@ -59,6 +93,14 @@ public class CommentController {
         }
     }
 
+    /**
+     * Met à jour un commentaire existant.
+     *
+     * @param id identifiant du commentaire
+     * @param commentDTO nouvelles données
+     * @return message de confirmation
+     */
+    @Operation(summary = "Modifier un commentaire")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO) {
         if (commentDTO.getContent() == null || commentDTO.getContent().trim().isEmpty()) {
@@ -78,6 +120,13 @@ public class CommentController {
         }
     }
 
+    /**
+     * Supprime un commentaire.
+     *
+     * @param id identifiant du commentaire
+     * @return message de confirmation
+     */
+    @Operation(summary = "Supprimer un commentaire")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCommentById(@PathVariable Long id) {
         CommentDTO commentDTO = commentService.getCommentById(id);

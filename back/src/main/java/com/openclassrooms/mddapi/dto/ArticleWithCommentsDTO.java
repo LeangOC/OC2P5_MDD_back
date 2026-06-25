@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
-
+/**
+ * Objet de transfert représentant un article
+ * accompagné de l'ensemble de ses commentaires.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

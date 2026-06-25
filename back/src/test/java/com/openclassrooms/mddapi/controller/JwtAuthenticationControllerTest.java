@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.configuration.jwtTokenUtil;
+import com.openclassrooms.mddapi.configuration.JwtTokenUtil;
 import com.openclassrooms.mddapi.dto.UserDTO;
 import com.openclassrooms.mddapi.model.JwtRequest;
 import com.openclassrooms.mddapi.model.JwtResponse;
@@ -38,7 +38,7 @@ class JwtAuthenticationControllerTest {
     private JwtUserDetailsService userDetailsService;
 
     @Mock
-    private jwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
 
     @InjectMocks
     private JwtAuthenticationController controller;

@@ -5,6 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Représente l'abonnement d'un utilisateur à un sujet.
+ *
+ * <p>
+ * Cette entité matérialise la relation entre
+ * un utilisateur et un sujet.
+ * </p>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Entity
 @Table(name = "subscriptions", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"user_id", "subject_id"})

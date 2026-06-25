@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Repository JPA responsable de l'accès
+ * aux données des utilisateurs.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 

@@ -4,7 +4,21 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Représente un utilisateur enregistré sur la plateforme.
+ *
+ * <p>
+ * Un utilisateur peut :
+ * </p>
+ * <ul>
+ *     <li>publier des articles ;</li>
+ *     <li>publier des commentaires ;</li>
+ *     <li>s'abonner à des sujets.</li>
+ * </ul>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")

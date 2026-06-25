@@ -10,6 +10,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service métier responsable de la gestion des utilisateurs.
+ *
+ * <p>
+ * Cette classe gère :
+ * </p>
+ *
+ * <ul>
+ *     <li>la création des comptes utilisateurs ;</li>
+ *     <li>la récupération des profils ;</li>
+ *     <li>la modification des informations utilisateur ;</li>
+ *     <li>la suppression des comptes.</li>
+ * </ul>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Service
 public class UserService {
 
@@ -19,7 +36,15 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
+    /**
+     * Crée un nouveau compte utilisateur.
+     *
+     * <p>
+     * Le mot de passe est chiffré avant stockage en base.
+     * </p>
+     *
+     * @return utilisateur créé
+     */
     public UserDTO createUser(String email, String username, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new UserAlreadyExistsException("An account with this email already exists");
@@ -45,6 +70,13 @@ public class UserService {
         return user.map(this::toDTO).orElse(null);
     }
 
+    /**
+     * Met à jour les informations personnelles d'un utilisateur.
+     *
+     * @param id identifiant utilisateur
+     *
+     * @return utilisateur modifié
+     */
     public UserDTO updateUser(Long id, String email, String username) {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isEmpty()) {
@@ -58,7 +90,11 @@ public class UserService {
         return toDTO(user);
     }
 
-
+    /**
+     * Supprime un compte utilisateur.
+     *
+     * @param id identifiant utilisateur
+     */
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

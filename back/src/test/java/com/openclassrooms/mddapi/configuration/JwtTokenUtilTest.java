@@ -13,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JwtTokenUtilTest {
 
-    private jwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
 
     private CustomUserDetails userDetails;
 
     @BeforeEach
     void setUp() {
 
-        jwtTokenUtil = new jwtTokenUtil();
+        jwtTokenUtil = new JwtTokenUtil();
 
         ReflectionTestUtils.setField(
                 jwtTokenUtil,

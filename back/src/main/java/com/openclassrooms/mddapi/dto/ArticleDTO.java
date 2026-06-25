@@ -8,10 +8,15 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-
+/**
+ * Objet de transfert utilisé pour les échanges
+ * relatifs aux articles entre l'API REST
+ * et le frontend Angular.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class ArticleDTO {
     private Long id;
 

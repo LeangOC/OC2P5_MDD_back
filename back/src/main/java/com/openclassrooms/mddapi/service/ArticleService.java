@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.service;
 import com.openclassrooms.mddapi.dto.ArticleDTO;
 import com.openclassrooms.mddapi.dto.ArticleWithCommentsDTO;
 import com.openclassrooms.mddapi.dto.CommentDTO;
+import com.openclassrooms.mddapi.exception.ResourceNotFoundException;
 import com.openclassrooms.mddapi.exception.SubjectNotFoundException;
 import com.openclassrooms.mddapi.exception.UserNotFoundException;
 import com.openclassrooms.mddapi.model.*;
@@ -15,6 +16,29 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service métier responsable de la gestion des articles.
+ *
+ * <p>
+ * Cette classe centralise les traitements liés aux articles :
+ * </p>
+ *
+ * <ul>
+ *     <li>création d'un article ;</li>
+ *     <li>consultation des articles ;</li>
+ *     <li>récupération des articles liés aux abonnements utilisateur ;</li>
+ *     <li>mise à jour des articles existants ;</li>
+ *     <li>suppression d'articles.</li>
+ * </ul>
+ *
+ * <p>
+ * Le service assure également la conversion entre les entités JPA
+ * et les objets de transfert utilisés par l'API REST.
+ * </p>
+ *
+ * @author LCH
+ * @since 1.0
+ */
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
@@ -39,11 +63,33 @@ public class ArticleService {
         return articles.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    /**
+     * Recherche un article complet avec ses commentaires.
+     *
+     * @param id identifiant unique de l'article
+     *
+     * @return article détaillé contenant également ses commentaires
+     *
+     * @throws ResourceNotFoundException
+     * si aucun article ne correspond à l'identifiant fourni
+     */
     public ArticleWithCommentsDTO getArticleById(Long id) {
         Optional<Article> optionalArticle = articleRepository.findById(id);
         return optionalArticle.map(this::toWithCommentsDTO).orElse(null);
     }
 
+    /**
+     * Crée un nouvel article.
+     *
+     * <p>
+     * L'auteur de l'article est associé à partir de l'utilisateur
+     * authentifié.
+     * </p>
+     *
+     * @param articleDTO données nécessaires à la création
+     *
+     * @return article créé
+     */
     public Article createArticle(ArticleDTO articleDTO) {
         Article article = getArticle(articleDTO);
 
@@ -51,6 +97,17 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    /**
+     * Met à jour les informations d'un article existant.
+     *
+     * @param id identifiant de l'article
+     * @param articleDTO nouvelles informations
+     *
+     * @return article modifié
+     *
+     * @throws ResourceNotFoundException
+     * si l'article n'existe pas
+     */
     public Article updateArticle(Long id, ArticleDTO articleDTO) {
         Article article = getArticle(articleDTO);
 
@@ -59,7 +116,18 @@ public class ArticleService {
         // Save the article in the database
         return articleRepository.save(article);
     }
-
+    /**
+     * Récupère les articles accessibles pour un utilisateur.
+     *
+     * <p>
+     * Seuls les articles appartenant aux sujets auxquels l'utilisateur
+     * est abonné sont retournés.
+     * </p>
+     *
+     * @param articleDTO identifiant de l'utilisateur connecté
+     *
+     * @return liste des articles associés aux abonnements utilisateur
+     */
     private Article getArticle(ArticleDTO articleDTO) {
         // Trouver l'auteur par userId
         User author = userRepository.findById(articleDTO.getUserId())
@@ -79,6 +147,14 @@ public class ArticleService {
         return article;
     }
 
+    /**
+     * Supprime définitivement un article.
+     *
+     * @param id identifiant de l'article à supprimer
+     *
+     * @throws ResourceNotFoundException
+     * si aucun article n'existe avec cet identifiant
+     */
     public void deleteArticleById(Long id) {
         articleRepository.deleteById(id);
     }
