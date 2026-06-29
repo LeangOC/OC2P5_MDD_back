@@ -1,6 +1,6 @@
 # Envirronnement git bash :
-export DB_USER=user_root
-export DB_PASSWORD=password_root
+export DB_USER=user_root  
+export DB_PASSWORD=password_root  
 
 # Démarrage l'application:  
 - mvn spring-boot:run
