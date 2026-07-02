@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class JwtAuthenticationControllerTest {
+class AuthenticationControllerTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -41,7 +41,7 @@ class JwtAuthenticationControllerTest {
     private JwtTokenUtil jwtTokenUtil;
 
     @InjectMocks
-    private JwtAuthenticationController controller;
+    private AuthenticationController controller;
 
     private CustomUserDetails userDetails;
 

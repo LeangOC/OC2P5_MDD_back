@@ -23,17 +23,17 @@ public class UserDTO {
 
     private Long id;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
+    @NotBlank(message = "L'adresse e-mail est obligatoire")
+    @Size(max = 50, message = "L'adresse e-mail ne peut pas dépasser 50 caractères")
+    @Email(message = "L'adresse e-mail n'est pas valide")
     private String email;
 
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "Le nom d'utilisateur est obligatoire")
+    @Size(max = 50, message = "Le nom d'utilisateur ne peut pas dépasser 50 caractères")
     private String username;
 
-    @NotBlank
-    @Size(min = 6, max = 40)
+    @NotBlank(message = "Le mot de passe est obligatoire")
+    @Size(min = 6, max = 40, message = "Le mot de passe doit contenir entre 6 et 40 caractères")
     private String password;
 
 }
